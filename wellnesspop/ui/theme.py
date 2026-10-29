@@ -31,8 +31,8 @@ h1, h2, h3 {letter-spacing: -0.015em;}
 [data-testid="stMetric"] {padding: .85rem 1rem;}
 [data-testid="stMetricLabel"] p {font-size: .82rem; opacity: .78; font-weight: 550;}
 [data-testid="stExpander"] details summary p {font-weight: 600;}
-.stTabs [data-baseweb="tab-list"] {gap: .25rem;}
-.stTabs [data-baseweb="tab"] {padding: .5rem .9rem; font-weight: 550;}
+.stTabs [role="tablist"] {gap: .25rem;}
+.stTabs [role="tab"] {padding: .5rem .9rem; font-weight: 550;}
 [data-testid="stForm"] {padding: 1.25rem 1.25rem .75rem;}
 
 /* Page header */
@@ -81,10 +81,47 @@ h1, h2, h3 {letter-spacing: -0.015em;}
 .wp-plan b {font-size: .9rem;}
 .wp-muted {opacity: .65;}
 
+/* Metric rows wrap instead of truncating: as many per row as fit, two on a phone */
+[class*="st-key-wp_metrics"] [data-testid="stHorizontalBlock"] {flex-wrap: wrap; gap: .75rem;}
+[class*="st-key-wp_metrics"] [data-testid="stColumn"] {flex: 1 1 165px !important;
+  min-width: 165px; width: auto !important;}
+
+/* Agenda list (phone timeline) */
+.wp-agenda-phase {font-size: .75rem; font-weight: 650; letter-spacing: .08em;
+  text-transform: uppercase; opacity: .6; margin: 1rem 0 .4rem;}
+.wp-agenda-item {display: grid; grid-template-columns: 4.6rem 1fr; gap: .75rem;
+  padding: .65rem 0; border-bottom: 1px solid rgba(127,127,127,.15);}
+.wp-agenda-date {font-size: .8rem; font-weight: 650; line-height: 1.3;}
+.wp-agenda-date span {display: block; font-weight: 400; opacity: .65;}
+.wp-agenda-task {font-size: .9rem; font-weight: 600; line-height: 1.35;}
+.wp-agenda-meta {font-size: .8rem; opacity: .7; margin: .2rem 0 .3rem;}
+
+/* Page pager */
+[class*="st-key-wp_pager"] {margin-top: 2rem; padding-top: 1rem;
+  border-top: 1px solid rgba(127,127,127,.18);}
+
+/* Responsive visibility helpers: keyed containers */
+[class*="st-key-wp_mobile_only"] {display: none !important;}
+
 @media (max-width: 640px) {
-  .block-container {padding-top: 4rem;}
+  .block-container {padding: 4rem 1rem 3rem;}
   .wp-title {font-size: 1.45rem;}
-  .wp-card {min-height: 0;}
+  .wp-header {margin-bottom: .9rem;}
+  .wp-card {min-height: 0; padding: .85rem .95rem;}
+  .wp-card-value {font-size: 1.4rem;}
+  .wp-hero {padding: 1.15rem 1.1rem;}
+  [data-testid="stMetric"] {padding: .6rem .75rem;}
+  [data-testid="stMetricValue"] {font-size: 1.3rem;}
+  [data-testid="stForm"] {padding: .9rem .8rem .5rem;}
+  .stTabs [role="tablist"] {flex-wrap: wrap !important; overflow: visible !important;
+    height: auto !important; row-gap: .15rem;}
+  .stTabs [role="tablist"] ~ button, .stTabs button[aria-label*="scroll" i] {display: none !important;}
+  .stTabs [role="tab"] {padding: .4rem .6rem;}
+  .stTabs [data-baseweb="tab-highlight"], .stTabs [data-baseweb="tab-border"] {display: none;}
+  .stTabs [aria-selected="true"] {background: rgba(15,118,110,.12); border-radius: .5rem;}
+  [class*="st-key-wp_desktop_only"] {display: none !important;}
+  [class*="st-key-wp_mobile_only"] {display: block !important;}
+  button, [role="tab"], a[data-testid="stPageLink-NavLink"] {min-height: 2.6rem;}
 }
 </style>
 """
@@ -138,3 +175,37 @@ def hero(title: str, body: str, steps: list[tuple[str, str]]) -> None:
     s = "".join(f'<div class="wp-step"><b>{escape(a)}</b>{escape(b)}</div>' for a, b in steps)
     st.html(f'<div class="wp-hero"><h2>{escape(title)}</h2><p>{escape(body)}</p>'
             f'<div class="wp-steps">{s}</div></div>')
+
+
+def agenda(schedule) -> None:
+    """Phone-friendly timeline: tasks grouped by phase as a dated list."""
+    from wellnesspop import schema as S
+
+    flag_status = {"overdue": ("bad", "Overdue"), "conflict": ("bad", "Date conflict"),
+                   "late_start": ("warn", "Start date passed")}
+    parts = []
+    for phase in S.PHASES:
+        items = [t for t in schedule.tasks if not t.task.is_group and t.task.phase == phase]
+        if not items:
+            continue
+        parts.append(f'<div class="wp-agenda-phase">{escape(S.label(phase))}</div>')
+        for t in sorted(items, key=lambda x: (x.start, x.wbs_code)):
+            last = t.finish if t.is_milestone else t.finish - _one_day()
+            when = (f"{t.start:%d %b}" if last <= t.start
+                    else f"{t.start:%d %b}<span>to {last:%d %b}</span>")
+            flags = [flag_status[f] for f in t.flags if f in flag_status]
+            pills = "".join(pill(k, v) for k, v in flags) or (
+                pill("good", "Done") if t.task.status == "complete" else "")
+            kind = "Milestone · " if t.is_milestone else ""
+            parts.append(
+                f'<div class="wp-agenda-item"><div class="wp-agenda-date">{when}</div><div>'
+                f'<div class="wp-agenda-task">{escape(t.task.name)}</div>'
+                f'<div class="wp-agenda-meta">{kind}{escape(t.task.owner_role)} · '
+                f'{escape(S.label(t.task.status))}</div>{pills}</div></div>')
+    st.html("".join(parts))
+
+
+def _one_day():
+    import datetime as dt
+
+    return dt.timedelta(days=1)

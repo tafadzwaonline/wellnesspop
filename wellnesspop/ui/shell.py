@@ -103,3 +103,21 @@ def run_page(name: str) -> None:
         about.render()
     else:
         getattr(outputs, name)(state.result(store(), today()))
+    pager(name)
+
+
+def pager(name: str) -> None:
+    """Previous / next links so the app can be used without opening the sidebar on phones."""
+    scripts = [script for _, script, *_ in PAGES]
+    current = next(i for i, script in enumerate(scripts)
+                   if Path(script).stem in (name, "plan_inputs" if name == "inputs" else name))
+    with st.container(key="wp_pager"):
+        left, right = st.columns(2)
+        if current > 0:
+            _, script, title, _, _ = PAGES[current - 1]
+            left.page_link(str(ROOT / script), label=f"Previous: {title}",
+                           icon=":material/arrow_back:")
+        if current < len(PAGES) - 1:
+            _, script, title, _, _ = PAGES[current + 1]
+            right.page_link(str(ROOT / script), label=f"Next: {title}",
+                            icon=":material/arrow_forward:")

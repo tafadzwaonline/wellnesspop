@@ -2,6 +2,17 @@
 
 Weekly status format: done / blocked / next.
 
+## 2026-10-29: Desktop, tablet and phone support
+
+**Done**
+- Headline-number rows wrap instead of truncating (two per row on phones, fixed tablet cut-off).
+- Phone timeline shows a dated agenda; the Gantt chart remains on wider screens.
+- Input tabs wrap on phones; larger touch targets; chart toolbars removed for touch screens.
+- Previous / Next page links at the bottom of every page.
+- Editable tables pin the task / risk / activity name while scrolling sideways.
+- `Start WellnessPop.cmd` one-click launcher for Windows desktops.
+- Verified in Chrome at 390, 820 and 1440 px: no horizontal page scroll, no console errors.
+
 ## 2026-10-29: UI refresh
 
 **Done**

@@ -48,6 +48,16 @@ Rates are typed as percentages (20 means 20%). Ticket tier shares for weighted t
 - Dates `YYYY-MM-DD`, money as plain numbers, rates as fractions (0.2 = 20%).
 - Limits: 5 MB, 5,000 rows per table. Formulas, macros and external links are rejected.
 
-## 5. Accessibility
+## 5. Desktop, tablet and phone
+
+WellnessPop is one responsive web app; nothing needs installing on the device you use it from.
+
+- **Desktop / laptop:** any current browser (Chrome, Edge, Firefox, Safari). On Windows you can double-click **Start WellnessPop.cmd** in the project folder: it sets itself up the first time, starts the app and opens your browser.
+- **Tablet:** headline numbers wrap into rows; open or close the sidebar with the arrow at the top left.
+- **Phone:** pages stack into one column, headline numbers show two per row, the Timeline page becomes a dated agenda (the chart returns on wider screens), input tabs wrap so every tab is visible, and every page ends with **Previous / Next** links so you rarely need the sidebar. Wide editable tables scroll sideways with the task, risk or activity name pinned on the left.
+- **Opening it on your phone:** once the app is hosted (see `deployment.md`), open its `streamlit.app` address. While it runs on your own computer, a phone on the **same Wi-Fi** can open `http://<your computer's local IP>:8501` (Windows may ask you to allow Python through the firewall). Anyone on that network can reach it while it runs, so only do this on a network you trust.
+- **Home-screen shortcut:** in your phone browser use *Add to Home Screen* (Safari: Share menu; Chrome: ⋮ menu). It opens like an app but still runs in the browser. There is no app-store app: native mobile apps are outside the project scope.
+
+## 6. Accessibility
 
 All controls are keyboard-operable Streamlit widgets with visible labels. Every chart has a table alternative, and statuses use words and icons, not color alone. On a phone, open the sidebar with the arrow at the top left.

@@ -32,6 +32,12 @@ def _header(r: PlanResult, title: str, subtitle: str, sim_chip: bool = False) ->
     theme.page_header(title, subtitle, eyebrow=eyebrow(), chips=chips)
 
 
+def _chart(fig, **kw) -> None:
+    """Plotly chart without the floating toolbar (cleaner on touch screens)."""
+    st.plotly_chart(fig, config={"displayModeBar": False, "scrollZoom": False,
+                                 "responsive": True}, **kw)
+
+
 def _table(df: pd.DataFrame, **kw) -> None:
     st.dataframe(df, hide_index=True, width="stretch", **kw)
 
@@ -118,7 +124,7 @@ def budget(r: PlanResult) -> None:
     _header(r, "Budget", "What the event earns and costs at your low, likely and high "
             "registration estimates, assuming it goes ahead. Weather risk is in the Simulation.")
     sc = [b.scenarios[k] for k in ("low", "likely", "high")]
-    cols = st.columns(4)
+    cols = st.container(key="wp_metrics_budget").columns(4)
     for col, s in zip(cols, sc):
         col.metric(f"Net income · {s.name}", fmt.money(s.net), border=True,
                    help=f"{fmt.num(s.registrations)} registrations, about "
@@ -185,7 +191,7 @@ def break_even(r: PlanResult) -> None:
     be = r.break_even
     _header(r, "Break-even", "How many people you need, and what they need to pay, for income "
             "to cover costs if the event goes ahead.")
-    c1, c2, c3 = st.columns(3)
+    c1, c2, c3 = st.container(key="wp_metrics_be").columns(3)
     c1.metric("Registrations needed",
               str(be.registrations) if be.registrations is not None else "Not achievable",
               border=True, help="Sign-ups before no-shows")
@@ -200,7 +206,7 @@ def break_even(r: PlanResult) -> None:
         md.write(be.price_sentence)
         grid = np.arange(0, r.plan.venue.capacity + 1, dtype=float)
         net = normalize_zero(evaluate_baseline(r.model, grid).ordinary_net)
-        st.plotly_chart(charts.break_even_curve(grid, net, be.registrations), width="stretch",
+        _chart(charts.break_even_curve(grid, net, be.registrations), width="stretch",
                         key=wkey("be_chart"))
     with st.expander("Table: net income by registrations"):
         step = max(1, len(grid) // 20)
@@ -244,7 +250,7 @@ def simulation(r: PlanResult) -> None:
         with st.container(border=True):
             md.markdown(HOW_TO_READ.read_text(encoding="utf-8"))
         return
-    c = st.columns(4)
+    c = st.container(key="wp_metrics_sim").columns(4)
     c[0].metric("Probability of breaking even", fmt.pct(sim.probability_break_even), border=True)
     c[1].metric("P10 (bad case)", fmt.money(sim.p10), border=True,
                 help="Only 1 in 10 outcomes were worse")
@@ -255,14 +261,14 @@ def simulation(r: PlanResult) -> None:
     with tab1:
         for line in sim.explainer:
             md.markdown(f"- {line}")
-        st.plotly_chart(charts.histogram(sim), width="stretch", key=wkey("hist"))
+        _chart(charts.histogram(sim), width="stretch", key=wkey("hist"))
         with st.expander("Table: histogram bins"):
             e = sim.histogram_edges
             _table(pd.DataFrame({"From": e[:-1], "To": e[1:], "Runs": sim.histogram_counts}),
                    column_config={"From": MONEY, "To": MONEY})
     with tab2:
         if sim.tornado:
-            st.plotly_chart(charts.tornado(sim), width="stretch", key=wkey("tornado"))
+            _chart(charts.tornado(sim), width="stretch", key=wkey("tornado"))
             _table(pd.DataFrame([{
                 "Input": t.name, "Low input": t.low_input, "High input": t.high_input,
                 "Expected net at low": t.net_at_low, "Expected net at high": t.net_at_high,
@@ -295,9 +301,9 @@ def wbs(r: PlanResult) -> None:
     for row in rows:
         row["wbs"] = codes.get(row["id"], "")
     rows.sort(key=lambda x: [int(p) for p in x["wbs"].split(".") if p.isdigit()] or [999])
-    df = pd.DataFrame(rows, columns=["wbs", "id", "name", "phase", "parent_id", "duration_days",
-                                     "offset_days", "owner_role", "status", "predecessor_ids",
-                                     "manual_start"])
+    df = pd.DataFrame(rows, columns=["wbs", "name", "status", "owner_role", "duration_days",
+                                     "offset_days", "predecessor_ids", "manual_start", "phase",
+                                     "parent_id", "id"])
     with st.form(wkey("wbs_form"), border=False):
         edited = st.data_editor(
             df, num_rows="dynamic", hide_index=True, width="stretch", key=wkey("wbs_editor"),
@@ -305,7 +311,7 @@ def wbs(r: PlanResult) -> None:
             column_config={
                 "wbs": CC.TextColumn("WBS", disabled=True, width="small"),
                 "id": CC.TextColumn("Task ID", disabled=True, help="Generated for new rows"),
-                "name": CC.TextColumn("Task", required=True, width="large"),
+                "name": CC.TextColumn("Task", required=True, width="large", pinned=True),
                 "phase": CC.SelectboxColumn("Phase", options=list(S.PHASES)),
                 "parent_id": CC.TextColumn("Parent ID", help="phase.pre_event, phase.event_day, "
                                            "phase.post_event, or another task ID"),
@@ -351,8 +357,10 @@ def gantt(r: PlanResult) -> None:
         md.warning(f"{len(sch.problems)} task(s) need attention: overdue, past their latest "
                    "start, or in conflict with a pinned date. Dates are never moved silently.",
                    icon=":material/warning:")
-    with st.container(border=True):
-        st.plotly_chart(charts.gantt(sch, r.today), width="stretch", key=wkey("gantt_chart"))
+    with st.container(border=True, key="wp_desktop_only_gantt"):
+        _chart(charts.gantt(sch, r.today), width="stretch", key=wkey("gantt_chart"))
+    with st.container(key="wp_mobile_only_gantt"):
+        theme.agenda(sch)
     tab1, tab2 = st.tabs(["Schedule table", "Dependencies"])
     with tab1:
         _table(pd.DataFrame([{
@@ -380,7 +388,7 @@ def risks(r: PlanResult) -> None:
             "they never change simulation inputs.")
     show_issues([i for i in r.issues if i.path.startswith("risk")])
     open_risks = [x for x in r.risks if x.status != "closed"]
-    c = st.columns(4)
+    c = st.container(key="wp_metrics_risks").columns(4)
     for col, band in zip(c, ("Critical", "High", "Medium", "Low")):
         col.metric(f"{band} risks", sum(x.band == band for x in open_risks), border=True,
                    help={"Critical": "Score 17-25", "High": "Score 10-16", "Medium": "Score 5-9",
@@ -396,15 +404,15 @@ def risks(r: PlanResult) -> None:
                               "Plan": CC.TextColumn(width="large")})
     with tab2:
         df = pd.DataFrame(risk_table_rows(list(r.risks)),
-                          columns=["id", "title", "likelihood", "impact", "owner_role",
-                                   "response", "response_note", "status", "assumption_refs"])
+                          columns=["title", "likelihood", "impact", "status", "owner_role",
+                                   "response", "response_note", "assumption_refs", "id"])
         with st.form(wkey("risk_form"), border=False):
             edited = st.data_editor(
                 df, num_rows="dynamic", hide_index=True, width="stretch",
                 key=wkey("risk_editor"),
                 column_config={
                     "id": CC.TextColumn("ID", disabled=True),
-                    "title": CC.TextColumn("Risk", required=True, width="large"),
+                    "title": CC.TextColumn("Risk", required=True, width="large", pinned=True),
                     "likelihood": CC.NumberColumn("Likelihood", min_value=1, max_value=5, step=1),
                     "impact": CC.NumberColumn("Impact", min_value=1, max_value=5, step=1),
                     "owner_role": CC.TextColumn("Owner role"),
@@ -436,7 +444,7 @@ def staffing(r: PlanResult) -> None:
     s = r.staffing
     _header(r, "Staffing", "Role costs, coverage and credentials. Staff costs feed the budget "
             "and simulation automatically. Edit roles under Plan inputs › Staffing.")
-    c = st.columns(4)
+    c = st.container(key="wp_metrics_staff").columns(4)
     c[0].metric("Staffing cost", fmt.money(s.total_cost), border=True)
     c[1].metric("People planned", sum(x.count for x in s.rows), border=True)
     c[2].metric("Coverage gap", f"{s.total_gap} short" if s.total_gap else "Covered",
@@ -469,7 +477,7 @@ def marketing(r: PlanResult) -> None:
             "Marking items complete never sends anything.")
     soon = sum(1 for x in m.rows if x.status != "complete"
                and 0 <= (x.due_date - r.today).days <= 14)
-    c = st.columns(3)
+    c = st.container(key="wp_metrics_mkt").columns(3)
     c[0].metric("Complete", f"{m.complete} / {m.total}", border=True)
     c[1].metric("Due in the next 14 days", soon, border=True)
     c[2].metric("Before earliest start", m.infeasible_count, border=True)
@@ -485,16 +493,16 @@ def marketing(r: PlanResult) -> None:
             new["compress"] = not m.compressed
             state.commit_edits(store(), "marketing", new)
             st.rerun()
-    df = pd.DataFrame([{"id": x.id, "due": x.due_date, "activity": x.activity,
+    df = pd.DataFrame([{"id": x.id, "activity": x.activity, "due": x.due_date,
                         "channel": S.label(x.channel), "owner": x.owner_role,
                         "status": x.status, "flags": flags_text(x.flags)} for x in m.rows],
-                      columns=["id", "due", "activity", "channel", "owner", "status", "flags"])
+                      columns=["id", "activity", "due", "status", "channel", "owner", "flags"])
     with st.form(wkey("mkt_form"), border=False):
         edited = st.data_editor(
             df, hide_index=True, width="stretch", key=wkey("mkt_editor"),
             disabled=["id", "due", "activity", "channel", "owner", "flags"],
             column_config={"id": None, "due": CC.DateColumn("Due", format="ddd D MMM YYYY"),
-                           "activity": CC.TextColumn("Activity", width="large"),
+                           "activity": CC.TextColumn("Activity", width="large", pinned=True),
                            "channel": "Channel", "owner": "Owner", "flags": "Flags",
                            "status": CC.SelectboxColumn("Status", options=list(S.TASK_STATUSES),
                                                         required=True)})

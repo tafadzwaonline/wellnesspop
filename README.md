@@ -34,6 +34,10 @@ More screenshots (local run, 29 October 2026): [welcome](docs/screenshots/welcom
 
 On macOS/Linux, use `python3` and `.venv/bin/python` instead of `.\.venv\Scripts\python.exe`.
 
+**Windows shortcut:** double-click `Start WellnessPop.cmd`. It creates the virtual environment on first run, starts the app and opens your browser.
+
+**Phones and tablets:** the interface is responsive (tested at 390 px phone, 820 px tablet and 1440 px desktop widths, light and dark). See the user guide for opening it on a phone and adding a home-screen shortcut.
+
 ## Project layout
 
 ```text
