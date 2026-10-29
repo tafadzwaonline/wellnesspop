@@ -1,0 +1,12 @@
+{
+  "_note": "Offsets are calendar days from the event date. channels lists the channels an activity uses (intersected with the event's selected channels). Weekly reminders are generated between registration opening and the final reminder.",
+  "activities": [
+    {"id": "mkt.save_the_date", "name": "Save-the-date announcement", "offset_days": -42, "channels": ["instagram", "email", "flyers", "partner_newsletter"], "owner_role": "Organizer"},
+    {"id": "mkt.registration_open", "name": "Registration opens", "offset_days": -28, "channels": ["instagram", "email", "flyers", "partner_newsletter", "eventbrite"], "owner_role": "Organizer"},
+    {"id": "mkt.early_bird_close", "name": "Early-bird price closes", "offset_days": -14, "channels": ["instagram", "email", "eventbrite"], "owner_role": "Organizer", "condition": "early_bird"},
+    {"id": "mkt.final_reminder", "name": "Final reminder (48 hours)", "offset_days": -2, "channels": ["instagram", "email"], "owner_role": "Organizer"},
+    {"id": "mkt.day_of", "name": "Day-of post", "offset_days": 0, "channels": ["instagram"], "owner_role": "Organizer"},
+    {"id": "mkt.thank_you", "name": "Thank-you and survey", "offset_days": 1, "channels": ["email", "instagram"], "owner_role": "Organizer"}
+  ],
+  "weekly_reminder": {"id_prefix": "mkt.reminder", "name": "Weekly reminder", "after": "mkt.registration_open", "before": "mkt.final_reminder", "every_days": 7, "channels": ["instagram", "email"], "owner_role": "Organizer"}
+}

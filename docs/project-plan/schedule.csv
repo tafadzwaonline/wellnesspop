@@ -1,0 +1,9 @@
+gate,original_review,deliverables,status_2026_10_29
+1,2026-10-02,D1 PRD/schema; D2 wireframes; D3 build plan,Code artifacts done 2026-10-29; discovery and owner review outstanding
+2,2026-10-09,D4 budget/break-even,Built and tested 2026-10-29
+3,2026-10-16,D5 WBS/Gantt,Built and tested 2026-10-29
+4,2026-10-23,D6 simulation/risk,Built and tested 2026-10-29
+5,2026-10-30,D7 staffing/marketing,Built and tested 2026-10-29 (all tabs present)
+6,2026-11-06,D8 dashboard/exports/user tests,Built and tested; user tests and Excel/Sheets manual checks not done
+7,2026-11-13,D9 release/docs/video; D10 case study,Docs drafted; deployment / video / case study not done
+Buffer,2026-11-20,Handover,Rebaseline with project owner

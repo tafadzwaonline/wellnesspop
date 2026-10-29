@@ -1,0 +1,365 @@
+{
+  "_demo": {
+    "key": "scenario_c",
+    "title": "C: One-Day Wellness Fair",
+    "summary": "Hybrid fair with free entry, $10 class passes, four sessions and six vendors.",
+    "event_min_days": 63,
+    "event_weekday": 5,
+    "alternate_offset_days": null
+  },
+  "schema_version": "1.0",
+  "currency": "USD",
+  "event": {
+    "name": "One-Day Wellness Fair",
+    "event_type": "one_day_fair",
+    "setting": "hybrid",
+    "date": "2027-01-02",
+    "start_time": "10:00",
+    "end_time": "17:00",
+    "timezone": "America/Chicago",
+    "session_count": 4,
+    "historical_ack": false
+  },
+  "rain": {
+    "has_rain_plan": true,
+    "alternate_date": null,
+    "alternate_venue": "Indoor gym at a partner community center (to confirm)"
+  },
+  "goals": {
+    "primary_goal": "community_reach",
+    "target_attendance": 150,
+    "target_net_income": -500,
+    "spending_limit": 3000
+  },
+  "venue": {
+    "name": "Community center grounds (to confirm)",
+    "capacity": 220,
+    "permit_required": false,
+    "permit_cost": 0,
+    "permit_lead_days": 30,
+    "permit_retained_fraction": 1,
+    "rental_total": 250,
+    "rental_advance": 100,
+    "rental_retained_fraction": 0.5,
+    "security_deposit": 0,
+    "security_deposit_forfeit_fraction": 0,
+    "insurance_required": true,
+    "insurance_cost": 150,
+    "insurance_lead_days": 14,
+    "insurance_retained_fraction": 1
+  },
+  "attendance": {
+    "low": 80,
+    "likely": 150,
+    "high": 220,
+    "planned_peak": null
+  },
+  "no_show": {
+    "low": 0.2,
+    "mean": 0.3,
+    "high": 0.4,
+    "concentration": 6
+  },
+  "processing": {
+    "ticket_fee_rate": 0
+  },
+  "weather": {
+    "cancellation_probability": 0.2
+  },
+  "simulation": {
+    "runs": 10000,
+    "seed": 42
+  },
+  "marketing": {
+    "earliest_start": "2026-10-29",
+    "channels": [
+      "instagram",
+      "email",
+      "flyers",
+      "partner_newsletter"
+    ],
+    "budget": 75,
+    "budget_retained_fraction": 1
+  },
+  "fixed_costs": [
+    {
+      "id": "fc-tents",
+      "label": "Tents",
+      "category": "tents",
+      "amount": 200,
+      "retained_fraction": 0.5,
+      "uncertain": true,
+      "low": 150,
+      "mode": 200,
+      "high": 300
+    },
+    {
+      "id": "fc-furniture",
+      "label": "Tables and chairs",
+      "category": "furniture",
+      "amount": 100,
+      "retained_fraction": 0.5,
+      "uncertain": false
+    },
+    {
+      "id": "fc-sound",
+      "label": "Sound system",
+      "category": "sound",
+      "amount": 120,
+      "retained_fraction": 0.5,
+      "uncertain": false
+    },
+    {
+      "id": "fc-printing",
+      "label": "Printing",
+      "category": "printing",
+      "amount": 60,
+      "retained_fraction": 1,
+      "uncertain": false
+    }
+  ],
+  "variable_costs": [
+    {
+      "id": "vc-supplies",
+      "label": "Wristbands, water and handouts",
+      "low": 1,
+      "mode": 1.5,
+      "high": 2.5,
+      "retained_fraction": 0
+    }
+  ],
+  "ticket_tiers": [
+    {
+      "id": "tier-free-entry",
+      "label": "Free entry",
+      "preset": "free",
+      "price": 0,
+      "allocation": "weighted",
+      "weight": 1,
+      "billing_basis": "attended"
+    }
+  ],
+  "additional_revenue": [
+    {
+      "id": "rev-class-pass",
+      "label": "Class pass",
+      "unit_price": 10,
+      "quantity_basis": "per_attendee",
+      "quantity": 0,
+      "uptake_rate": 0.6,
+      "units_per_buyer": 2,
+      "fee_rate": 0.03,
+      "prepaid": false,
+      "refund_fraction": 1,
+      "fee_refund_fraction": 0
+    },
+    {
+      "id": "rev-vendor",
+      "label": "Vendor fee",
+      "unit_price": 50,
+      "quantity_basis": "fixed",
+      "quantity": 6,
+      "uptake_rate": 1,
+      "units_per_buyer": 1,
+      "fee_rate": 0,
+      "prepaid": true,
+      "refund_fraction": 1,
+      "fee_refund_fraction": 0
+    }
+  ],
+  "staffing": [
+    {
+      "id": "staff-instructors",
+      "role": "Session instructor",
+      "count": 4,
+      "hours": 1.25,
+      "pay_basis": "flat",
+      "rate": 75,
+      "volunteer": false,
+      "required_certifications": [
+        "instructor_credential"
+      ],
+      "confirmed_certifications": [
+        "instructor_credential"
+      ],
+      "coverage_ratio": null,
+      "retained_fraction": 0.5
+    },
+    {
+      "id": "staff-checkin",
+      "role": "Check-in",
+      "count": 2,
+      "hours": 7.5,
+      "pay_basis": "hourly",
+      "rate": 0,
+      "volunteer": true,
+      "required_certifications": [],
+      "confirmed_certifications": [],
+      "coverage_ratio": 30,
+      "retained_fraction": 1
+    },
+    {
+      "id": "staff-first-aid",
+      "role": "First aid",
+      "count": 1,
+      "hours": 7.5,
+      "pay_basis": "hourly",
+      "rate": 25,
+      "volunteer": false,
+      "required_certifications": [
+        "first_aid",
+        "cpr"
+      ],
+      "confirmed_certifications": [
+        "first_aid"
+      ],
+      "coverage_ratio": null,
+      "retained_fraction": 0
+    },
+    {
+      "id": "staff-setup",
+      "role": "Setup lead",
+      "count": 1,
+      "hours": 9,
+      "pay_basis": "hourly",
+      "rate": 20,
+      "volunteer": false,
+      "required_certifications": [],
+      "confirmed_certifications": [],
+      "coverage_ratio": null,
+      "retained_fraction": 0.5
+    },
+    {
+      "id": "staff-photo",
+      "role": "Photographer",
+      "count": 1,
+      "hours": 4,
+      "pay_basis": "flat",
+      "rate": 100,
+      "volunteer": false,
+      "required_certifications": [],
+      "confirmed_certifications": [],
+      "coverage_ratio": null,
+      "retained_fraction": 0
+    }
+  ],
+  "marketing_activities": null,
+  "provenance": {
+    "event.name": {
+      "source_kind": "brief",
+      "source_reference": "Brief Appendix B, Scenario C"
+    },
+    "event.event_type": {
+      "source_kind": "brief",
+      "source_reference": "Brief Appendix B: one-day fair"
+    },
+    "event.setting": {
+      "source_kind": "brief",
+      "source_reference": "Brief Appendix B: hybrid"
+    },
+    "event.session_count": {
+      "source_kind": "brief",
+      "source_reference": "Brief Appendix B: four sessions"
+    },
+    "venue.capacity": {
+      "source_kind": "brief",
+      "source_reference": "Brief Appendix B: capacity 220"
+    },
+    "venue.rental_total": {
+      "source_kind": "illustrative",
+      "note": "Brief names a venue cost; amount invented"
+    },
+    "venue.insurance_cost": {
+      "source_kind": "illustrative",
+      "note": "Amount invented"
+    },
+    "attendance.low": {
+      "source_kind": "brief",
+      "source_reference": "Brief Appendix B: 80 / 150 / 220"
+    },
+    "attendance.likely": {
+      "source_kind": "brief",
+      "source_reference": "Brief Appendix B: 80 / 150 / 220"
+    },
+    "attendance.high": {
+      "source_kind": "brief",
+      "source_reference": "Brief Appendix B: 80 / 150 / 220"
+    },
+    "no_show.mean": {
+      "source_kind": "brief",
+      "source_reference": "Brief Appendix B: 30% on free passes"
+    },
+    "weather.cancellation_probability": {
+      "source_kind": "brief",
+      "source_reference": "Brief Appendix B: 20% for outdoor sessions",
+      "note": "Applied as a whole-event cancellation approximation (MVP)"
+    },
+    "ticket_tiers:tier-free-entry": {
+      "source_kind": "brief",
+      "source_reference": "Brief Appendix B: free entry"
+    },
+    "additional_revenue:rev-class-pass": {
+      "source_kind": "brief",
+      "source_reference": "Brief Appendix B: $10 class passes",
+      "note": "Uptake 60% and 2 passes per buyer (of four sessions) are illustrative"
+    },
+    "additional_revenue:rev-vendor": {
+      "source_kind": "brief",
+      "source_reference": "Brief Appendix B: six vendor fees at $50",
+      "note": "Prepaid with full refund on cancellation (illustrative)"
+    },
+    "variable_costs:vc-supplies": {
+      "source_kind": "brief",
+      "source_reference": "Brief Appendix B: $1.50 per attendee",
+      "note": "Range illustrative"
+    },
+    "staffing:staff-instructors": {
+      "source_kind": "brief",
+      "source_reference": "Brief Appendix B: four instructors",
+      "note": "$100 fee illustrative"
+    },
+    "staffing:staff-checkin": {
+      "source_kind": "brief",
+      "source_reference": "Brief Appendix B: two check-in"
+    },
+    "staffing:staff-first-aid": {
+      "source_kind": "brief",
+      "source_reference": "Brief Appendix B: first aid",
+      "note": "Rate illustrative"
+    },
+    "staffing:staff-setup": {
+      "source_kind": "brief",
+      "source_reference": "Brief Appendix B: setup lead",
+      "note": "Rate illustrative"
+    },
+    "staffing:staff-photo": {
+      "source_kind": "brief",
+      "source_reference": "Brief Appendix B: photographer",
+      "note": "Fee illustrative"
+    },
+    "fixed_costs:fc-tents": {
+      "source_kind": "brief",
+      "source_reference": "Brief Appendix B: tents",
+      "note": "Amount and range illustrative"
+    },
+    "fixed_costs:fc-furniture": {
+      "source_kind": "brief",
+      "source_reference": "Brief Appendix B: tables/chairs",
+      "note": "Amount illustrative"
+    },
+    "fixed_costs:fc-sound": {
+      "source_kind": "brief",
+      "source_reference": "Brief Appendix B: sound",
+      "note": "Amount illustrative"
+    },
+    "fixed_costs:fc-printing": {
+      "source_kind": "brief",
+      "source_reference": "Brief Appendix B: printing",
+      "note": "Amount illustrative"
+    },
+    "goals.target_net_income": {
+      "source_kind": "illustrative",
+      "note": "Negative target: assumes up to $500 of organizational subsidy"
+    }
+  }
+}

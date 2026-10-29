@@ -1,0 +1,9 @@
+[project]
+name = "wellnesspop"
+version = "1.0.0"
+description = "Free event planning and financial forecasting for community wellness organizers"
+requires-python = ">=3.11"
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]

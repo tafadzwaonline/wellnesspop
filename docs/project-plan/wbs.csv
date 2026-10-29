@@ -1,0 +1,15 @@
+id,phase,task,owner_role,status,evidence
+B1,Gate 1,PRD and input schema (D1),Builder,complete,docs/prd.md; docs/input-schema.md
+B2,Gate 1,Wireframes for every screen and state (D2),Builder,complete (text wireframes + screenshots; owner review pending),docs/wireframes/screens.md
+B3,Gate 1,Build plan: WBS / schedule / risk register (D3),Builder,complete,docs/project-plan/
+B4,Gate 1,Discovery: 3 practitioner interviews; 3-approach comparison,Fellowship owner,not started,
+B5,Gate 2,Shared financial evaluator; budget; break-even (D4),Builder,complete,tests/test_budget.py
+B6,Gate 3,WBS templates; backward scheduler; Gantt (D5),Builder,complete,tests/test_schedule.py
+B7,Gate 4,Monte Carlo; tornado; explainer; risk register (D6),Builder,complete,tests/test_simulation.py
+B8,Gate 5,Staffing and marketing modules (D7),Builder,complete,tests/test_modules.py
+B9,Gate 6,Dashboard; imports; XLSX/PDF exports (D8),Builder,complete,tests/test_export.py; tests/test_imports.py
+B10,Gate 6,Two unaided user tests under 20 minutes; fix top 5 issues,Fellowship owner,not started,docs/project-plan/user-test-results.md
+B11,Gate 6,Manual XLSX check in Excel and Google Sheets,Fellowship owner,not started,
+B12,Gate 7,Public repo; deploy to Community Cloud; deployed timing (D9),Fellowship owner,not started,docs/deployment.md
+B13,Gate 7,Three-minute demo video; case study (D9/D10),Fellowship owner,not started,docs/case-study.md
+B14,Gate 7,Research illustrative defaults; owner decisions D01-D05 and D24,Fellowship owner,not started,docs/decisions.md

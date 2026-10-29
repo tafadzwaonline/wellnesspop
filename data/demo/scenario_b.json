@@ -1,0 +1,73 @@
+{
+  "_demo": {
+    "key": "scenario_b",
+    "title": "B: Evening Sound Bath",
+    "summary": "Indoor community-room session at a $25 flat price with a refundable room deposit.",
+    "event_min_days": 42,
+    "event_weekday": 3,
+    "alternate_offset_days": null
+  },
+  "schema_version": "1.0",
+  "currency": "USD",
+  "event": {"name": "Evening Sound Bath", "event_type": "single_class", "setting": "indoor",
+            "date": "2026-12-10", "start_time": "19:00", "end_time": "20:30",
+            "timezone": "America/Chicago", "session_count": 1, "historical_ack": false},
+  "rain": {"has_rain_plan": false, "alternate_date": null, "alternate_venue": null},
+  "goals": {"primary_goal": "net_revenue", "target_attendance": 25, "target_net_income": 100,
+            "spending_limit": 650},
+  "venue": {"name": "Community room (to confirm)", "capacity": 40, "permit_required": false,
+            "permit_cost": 0, "permit_lead_days": 30, "permit_retained_fraction": 1,
+            "rental_total": 150, "rental_advance": 50, "rental_retained_fraction": 1,
+            "security_deposit": 100, "security_deposit_forfeit_fraction": 0,
+            "insurance_required": true, "insurance_cost": 60, "insurance_lead_days": 14,
+            "insurance_retained_fraction": 1},
+  "attendance": {"low": 15, "likely": 25, "high": 35, "planned_peak": null},
+  "no_show": {"low": 0.05, "mean": 0.15, "high": 0.25, "concentration": 6},
+  "processing": {"ticket_fee_rate": 0.03},
+  "weather": {"cancellation_probability": 0},
+  "simulation": {"runs": 10000, "seed": 42},
+  "marketing": {"earliest_start": "2026-10-29", "channels": ["instagram", "email", "eventbrite"],
+                "budget": 40, "budget_retained_fraction": 1},
+  "fixed_costs": [
+    {"id": "fc-printing", "label": "Printing", "category": "printing", "amount": 30,
+     "retained_fraction": 1, "uncertain": true, "low": 20, "mode": 30, "high": 50}
+  ],
+  "variable_costs": [
+    {"id": "vc-supplies", "label": "Blankets laundering, tea and eye pillows", "low": 2.5,
+     "mode": 3, "high": 4, "retained_fraction": 0}
+  ],
+  "ticket_tiers": [
+    {"id": "tier-flat", "label": "Flat price", "preset": "general", "price": 25,
+     "allocation": "weighted", "weight": 1, "billing_basis": "attended"}
+  ],
+  "additional_revenue": [],
+  "staffing": [
+    {"id": "staff-practitioner", "role": "Sound practitioner", "count": 1, "hours": 1.5,
+     "pay_basis": "flat", "rate": 200, "volunteer": false,
+     "required_certifications": ["instructor_credential"],
+     "confirmed_certifications": ["instructor_credential"], "coverage_ratio": null,
+     "retained_fraction": 1},
+    {"id": "staff-checkin", "role": "Check-in", "count": 1, "hours": 2.5, "pay_basis": "hourly",
+     "rate": 18, "volunteer": false, "required_certifications": [],
+     "confirmed_certifications": [], "coverage_ratio": 30, "retained_fraction": 1}
+  ],
+  "marketing_activities": null,
+  "provenance": {
+    "event.name": {"source_kind": "brief", "source_reference": "Brief Appendix B, Scenario B"},
+    "event.setting": {"source_kind": "brief", "source_reference": "Brief Appendix B: indoor community room"},
+    "venue.capacity": {"source_kind": "brief", "source_reference": "Brief Appendix B: capacity 40"},
+    "venue.rental_total": {"source_kind": "illustrative", "note": "Brief names room rental; amount invented"},
+    "venue.security_deposit": {"source_kind": "illustrative", "note": "Brief names a deposit; amount invented"},
+    "venue.insurance_cost": {"source_kind": "illustrative", "note": "Brief names an insurance rider; amount invented"},
+    "attendance.low": {"source_kind": "brief", "source_reference": "Brief Appendix B: 15 / 25 / 35"},
+    "attendance.likely": {"source_kind": "brief", "source_reference": "Brief Appendix B: 15 / 25 / 35"},
+    "attendance.high": {"source_kind": "brief", "source_reference": "Brief Appendix B: 15 / 25 / 35"},
+    "no_show.mean": {"source_kind": "brief", "source_reference": "Brief Appendix B: 15% no-shows"},
+    "weather.cancellation_probability": {"source_kind": "brief", "source_reference": "Brief Appendix B: 0% weather"},
+    "ticket_tiers:tier-flat": {"source_kind": "brief", "source_reference": "Brief Appendix B: $25 flat"},
+    "variable_costs:vc-supplies": {"source_kind": "brief", "source_reference": "Brief Appendix B: $3 per attendee", "note": "Range illustrative"},
+    "staffing:staff-practitioner": {"source_kind": "brief", "source_reference": "Brief Appendix B: flat-fee practitioner", "note": "$200 fee illustrative"},
+    "staffing:staff-checkin": {"source_kind": "brief", "source_reference": "Brief Appendix B: paid check-in", "note": "$18/hour illustrative, not a researched wage"},
+    "fixed_costs:fc-printing": {"source_kind": "brief", "source_reference": "Brief Appendix B: printing", "note": "Amount and range illustrative"}
+  }
+}

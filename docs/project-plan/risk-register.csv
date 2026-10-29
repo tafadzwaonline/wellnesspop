@@ -1,0 +1,9 @@
+id,risk,likelihood,impact,score,owner,status,response
+BR1,Financial definitions remain ambiguous,4,5,20,Builder + owner,open,Proposed defaults implemented and logged (docs/decisions.md); owner approval needed
+BR2,Monte Carlo scope grows,4,3,12,Builder,monitoring,MVP dimensions frozen; extensions in docs/later.md
+BR3,Gantt logic consumes schedule,3,3,9,Builder,closed,Finish-to-start only; pure scheduler tested
+BR4,Export formatting overruns,3,3,9,Builder,closed,Values-first workbook; bounded one-page PDF tested
+BR5,User testers unavailable,3,3,9,Fellowship owner,open,Book two testers now; record real observations only
+BR6,Hosting resource limits,2,3,6,Builder,monitoring,Vectorized engine (~0.04 s for 10k runs locally); no shared caches
+BR7,Original dates no longer realistic,4,4,16,Fellowship owner,open,Rebaseline gates with project owner
+BR8,Community Cloud telemetry conflicts with privacy brief,3,4,12,Fellowship owner,open,Decide D24: accept and disclose or self-host

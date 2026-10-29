@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.streamlit/secrets.toml
+*.log
+# Never commit generated user files
+*.xlsx
+*.pdf
+!docs/**/*.pdf
+exports/

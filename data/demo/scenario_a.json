@@ -1,0 +1,275 @@
+{
+  "_demo": {
+    "key": "scenario_a",
+    "title": "A: Saturday Yoga in the Park",
+    "summary": "Outdoor 75-minute class with a park permit, two ticket prices and ten free places.",
+    "event_min_days": 56,
+    "event_weekday": 5,
+    "alternate_offset_days": 7
+  },
+  "schema_version": "1.0",
+  "currency": "USD",
+  "event": {
+    "name": "Saturday Yoga in the Park",
+    "event_type": "single_class",
+    "setting": "outdoor",
+    "date": "2026-12-26",
+    "start_time": "09:00",
+    "end_time": "10:15",
+    "timezone": "America/Chicago",
+    "session_count": 1,
+    "historical_ack": false
+  },
+  "rain": {
+    "has_rain_plan": true,
+    "alternate_date": "2027-01-02",
+    "alternate_venue": null
+  },
+  "goals": {
+    "primary_goal": "community_reach",
+    "target_attendance": 40,
+    "target_net_income": 0,
+    "spending_limit": 600
+  },
+  "venue": {
+    "name": "Neighborhood park lawn (to confirm)",
+    "capacity": 60,
+    "permit_required": true,
+    "permit_cost": 25,
+    "permit_lead_days": 30,
+    "permit_retained_fraction": 1,
+    "rental_total": 0,
+    "rental_advance": 0,
+    "rental_retained_fraction": 1,
+    "security_deposit": 0,
+    "security_deposit_forfeit_fraction": 0,
+    "insurance_required": true,
+    "insurance_cost": 75,
+    "insurance_lead_days": 14,
+    "insurance_retained_fraction": 1
+  },
+  "attendance": {
+    "low": 25,
+    "likely": 40,
+    "high": 55,
+    "planned_peak": null
+  },
+  "no_show": {
+    "low": 0.1,
+    "mean": 0.2,
+    "high": 0.3,
+    "concentration": 6
+  },
+  "processing": {
+    "ticket_fee_rate": 0.03
+  },
+  "weather": {
+    "cancellation_probability": 0.25
+  },
+  "simulation": {
+    "runs": 10000,
+    "seed": 42
+  },
+  "marketing": {
+    "earliest_start": "2026-10-29",
+    "channels": [
+      "instagram",
+      "email",
+      "flyers"
+    ],
+    "budget": 25,
+    "budget_retained_fraction": 1
+  },
+  "fixed_costs": [
+    {
+      "id": "fc-signage",
+      "label": "Signage",
+      "category": "signage",
+      "amount": 30,
+      "retained_fraction": 1,
+      "uncertain": false
+    },
+    {
+      "id": "fc-speaker",
+      "label": "Portable speaker rental",
+      "category": "speaker",
+      "amount": 40,
+      "retained_fraction": 0.5,
+      "uncertain": true,
+      "low": 30,
+      "mode": 40,
+      "high": 60
+    }
+  ],
+  "variable_costs": [
+    {
+      "id": "vc-supplies",
+      "label": "Mats cleaning, water and wristbands",
+      "low": 1.5,
+      "mode": 2,
+      "high": 3,
+      "retained_fraction": 0
+    }
+  ],
+  "ticket_tiers": [
+    {
+      "id": "tier-general",
+      "label": "General",
+      "preset": "general",
+      "price": 15,
+      "allocation": "weighted",
+      "weight": 0.6,
+      "billing_basis": "attended"
+    },
+    {
+      "id": "tier-early",
+      "label": "Early bird",
+      "preset": "early_bird",
+      "price": 10,
+      "allocation": "weighted",
+      "weight": 0.4,
+      "billing_basis": "attended"
+    },
+    {
+      "id": "tier-free",
+      "label": "Free community places",
+      "preset": "free",
+      "price": 0,
+      "allocation": "free_quota",
+      "weight": 0,
+      "free_quota": 10,
+      "billing_basis": "attended"
+    }
+  ],
+  "additional_revenue": [],
+  "staffing": [
+    {
+      "id": "staff-instructor",
+      "role": "Lead instructor",
+      "count": 1,
+      "hours": 1.25,
+      "pay_basis": "flat",
+      "rate": 100,
+      "volunteer": false,
+      "required_certifications": [
+        "instructor_credential",
+        "cpr"
+      ],
+      "confirmed_certifications": [
+        "instructor_credential"
+      ],
+      "coverage_ratio": null,
+      "retained_fraction": 0.5
+    },
+    {
+      "id": "staff-checkin",
+      "role": "Check-in",
+      "count": 2,
+      "hours": 1.75,
+      "pay_basis": "hourly",
+      "rate": 0,
+      "volunteer": true,
+      "required_certifications": [],
+      "confirmed_certifications": [],
+      "coverage_ratio": 30,
+      "retained_fraction": 1
+    }
+  ],
+  "marketing_activities": null,
+  "provenance": {
+    "event.name": {
+      "source_kind": "brief",
+      "source_reference": "Brief Appendix B, Scenario A"
+    },
+    "event.event_type": {
+      "source_kind": "brief",
+      "source_reference": "Brief Appendix B, Scenario A"
+    },
+    "event.setting": {
+      "source_kind": "brief",
+      "source_reference": "Brief Appendix B: outdoor"
+    },
+    "event.end_time": {
+      "source_kind": "brief",
+      "source_reference": "Brief Appendix B: 75-minute class"
+    },
+    "venue.capacity": {
+      "source_kind": "brief",
+      "source_reference": "Brief Appendix B: capacity 60"
+    },
+    "venue.permit_required": {
+      "source_kind": "brief",
+      "source_reference": "Brief Appendix B: permit required"
+    },
+    "venue.permit_cost": {
+      "source_kind": "illustrative",
+      "note": "Not a researched Chicago Park District fee"
+    },
+    "venue.permit_lead_days": {
+      "source_kind": "illustrative",
+      "note": "Unverified planning default"
+    },
+    "venue.insurance_cost": {
+      "source_kind": "illustrative",
+      "note": "Not a researched premium"
+    },
+    "attendance.low": {
+      "source_kind": "brief",
+      "source_reference": "Brief Appendix B: 25 / 40 / 55"
+    },
+    "attendance.likely": {
+      "source_kind": "brief",
+      "source_reference": "Brief Appendix B: 25 / 40 / 55"
+    },
+    "attendance.high": {
+      "source_kind": "brief",
+      "source_reference": "Brief Appendix B: 25 / 40 / 55"
+    },
+    "no_show.mean": {
+      "source_kind": "brief",
+      "source_reference": "Brief Appendix B: 20% no-shows"
+    },
+    "weather.cancellation_probability": {
+      "source_kind": "brief",
+      "source_reference": "Brief Appendix B: 25% weather"
+    },
+    "ticket_tiers:tier-general": {
+      "source_kind": "brief",
+      "source_reference": "Brief Appendix B: $15 general",
+      "note": "60% share is illustrative; the brief gives no ticket mix"
+    },
+    "ticket_tiers:tier-early": {
+      "source_kind": "brief",
+      "source_reference": "Brief Appendix B: $10 early bird",
+      "note": "40% share is illustrative"
+    },
+    "ticket_tiers:tier-free": {
+      "source_kind": "brief",
+      "source_reference": "Brief Appendix B: ten free places"
+    },
+    "variable_costs:vc-supplies": {
+      "source_kind": "brief",
+      "source_reference": "Brief Appendix B: $2 per attendee",
+      "note": "$1.50-$3 range is illustrative"
+    },
+    "staffing:staff-instructor": {
+      "source_kind": "brief",
+      "source_reference": "Brief Appendix B: flat-fee lead instructor",
+      "note": "$100 fee is illustrative, not a researched wage"
+    },
+    "staffing:staff-checkin": {
+      "source_kind": "brief",
+      "source_reference": "Brief Appendix B: volunteer check-in"
+    },
+    "fixed_costs:fc-signage": {
+      "source_kind": "brief",
+      "source_reference": "Brief Appendix B: signage",
+      "note": "Amount illustrative"
+    },
+    "fixed_costs:fc-speaker": {
+      "source_kind": "brief",
+      "source_reference": "Brief Appendix B: speaker",
+      "note": "Amount and range illustrative"
+    }
+  }
+}

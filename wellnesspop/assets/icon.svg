@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="WellnessPop">
+  <rect width="64" height="64" rx="16" fill="#0F766E"/>
+  <path d="M32 14c6 7 8 14 0 26-8-12-6-19 0-26z" fill="#E6F4F1"/>
+  <path d="M16 28c8 1 13 5 16 12-9 2-15-2-16-12z" fill="#8FD3C8"/>
+  <path d="M48 28c-8 1-13 5-16 12 9 2 15-2 16-12z" fill="#8FD3C8"/>
+  <path d="M18 46h28" stroke="#E6F4F1" stroke-width="3" stroke-linecap="round"/>
+</svg>

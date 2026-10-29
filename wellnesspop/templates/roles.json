@@ -1,0 +1,20 @@
+[
+  {"key": "lead_instructor", "role": "Lead instructor", "pay_basis": "flat", "volunteer": false,
+   "coverage_ratio": null, "required_certifications": ["instructor_credential"],
+   "note": "Planning suggestion. Credential needs depend on the practice and venue."},
+  {"key": "assistant", "role": "Assistant instructor", "pay_basis": "flat", "volunteer": false,
+   "coverage_ratio": null, "required_certifications": [],
+   "note": "Planning suggestion for larger classes."},
+  {"key": "check_in", "role": "Check-in", "pay_basis": "hourly", "volunteer": true,
+   "coverage_ratio": 30, "required_certifications": [],
+   "note": "Illustrative ratio from the brief: one check-in person per 30 attendees."},
+  {"key": "first_aid", "role": "First aid", "pay_basis": "hourly", "volunteer": false,
+   "coverage_ratio": null, "required_certifications": ["first_aid", "cpr"],
+   "note": "Planning suggestion, not a regulatory requirement."},
+  {"key": "setup", "role": "Setup and teardown", "pay_basis": "hourly", "volunteer": true,
+   "coverage_ratio": null, "required_certifications": [],
+   "note": "Planning suggestion."},
+  {"key": "photographer", "role": "Photographer", "pay_basis": "flat", "volunteer": false,
+   "coverage_ratio": null, "required_certifications": [],
+   "note": "Optional; obtain photo consent at check-in."}
+]
